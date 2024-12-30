@@ -3,6 +3,8 @@
 
 **/*/application.properties
 
+**/Main.java
+
 # Logs
 *.log
 *.gz
