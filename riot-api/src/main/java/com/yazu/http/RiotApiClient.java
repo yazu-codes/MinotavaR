@@ -6,15 +6,21 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yazu.builder.RiotRequest;
+import com.yazu.model.AccountDto;
 
 public class RiotApiClient {
     private HttpClient c;
     private String apiKey;
+    private ObjectMapper mapper;
 
     public RiotApiClient() {
-        c = HttpClient.newHttpClient();
+        this.mapper = new ObjectMapper();
+        this.c = HttpClient.newHttpClient();
     }
 
     public RiotApiClient ApiKey(String apiKey) {
@@ -31,5 +37,17 @@ public class RiotApiClient {
                 .header("X-Riot-Token", apiKey)
                 .build();
         return c.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public <T> Optional<T> ParseResponse(HttpResponse<String> response, Class<T> parseTo) {
+        try {
+            String responseJson = response.body().toString();
+            T parsed = mapper.readValue(responseJson, parseTo);
+            return Optional.of(parsed);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block / FIX THIS LATER
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 }
