@@ -3,8 +3,8 @@ package com.yazu.constants;
 public class Platform {
     private String value;
 
-    public Platform(String Platform) {
-        this.value = Platform.toString();
+    public Platform(String platform) {
+        this.value = platform;
     }
 
     public static Platform BR1() {
