@@ -11,6 +11,9 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yazu.builder.RiotRequest;
+import com.yazu.constants.Region;
+import com.yazu.endpoint.accountv1.Account;
+import com.yazu.model.AccountDto;
 
 public class RiotApiClient {
     private HttpClient c;
@@ -52,5 +55,18 @@ public class RiotApiClient {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    public Optional<AccountDto> GetAccountByTagLineAndGameName(String gameName, String tagLine)
+            throws URISyntaxException, IOException, InterruptedException {
+        RiotRequest QueryMyAccountInformation = new RiotRequest(Region.EUROPE())
+                .Get(Account.ByGameNameAndTagLine(gameName, tagLine))
+                .Secure();
+
+        HttpResponse<String> response = this.Execute(QueryMyAccountInformation);
+
+        Optional<AccountDto> accountDto = this.ParseResponse(response, AccountDto.class);
+
+        return accountDto;
     }
 }

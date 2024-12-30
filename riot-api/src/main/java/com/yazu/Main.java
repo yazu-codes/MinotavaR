@@ -3,13 +3,9 @@ package com.yazu;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.Properties;
 
-import com.yazu.builder.RiotRequest;
-import com.yazu.constants.Region;
-import com.yazu.endpoint.accountv1.Account;
 import com.yazu.http.RiotApiClient;
 import com.yazu.model.AccountDto;
 
@@ -35,13 +31,7 @@ public class Main {
         RiotApiClient riotApiClient = new RiotApiClient()
                 .ApiKey(riotApiKey);
 
-        RiotRequest QueryMyAccountInformation = new RiotRequest(Region.EUROPE())
-                .Get(Account.ByGameNameAndTagLine(summonerName, tagLine))
-                .Secure();
-
-        HttpResponse<String> response = riotApiClient.Execute(QueryMyAccountInformation);
-
-        Optional<AccountDto> accountDto = riotApiClient.ParseResponse(response, AccountDto.class);
+        Optional<AccountDto> accountDto = riotApiClient.GetAccountByTagLineAndGameName(summonerName, tagLine);
 
         if (accountDto.isPresent()) {
             System.out.println("Account Puuid: " + accountDto.get().getPuuid());
