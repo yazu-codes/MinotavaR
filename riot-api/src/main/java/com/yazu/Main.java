@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yazu.builder.RiotRequest;
 import com.yazu.constants.Region;
 import com.yazu.endpoint.accountv1.Account;
@@ -13,7 +12,7 @@ import com.yazu.http.RiotApiClient;
 import com.yazu.model.AccountDto;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
         RiotApiClient riotApiClient = new RiotApiClient()
                 .ApiKey("PUT-YOUR-API-KEY-HERE");
 
@@ -21,15 +20,15 @@ public class Main {
                 .Get(Account.ByGameNameAndTagLine("YOURSUMMONERNAME", "YOURTAGLINE-EG-5252"))
                 .Secure();
 
-        try {
-            HttpResponse<String> response = riotApiClient.Execute(QueryMyAccountInformation);
+        HttpResponse<String> response = riotApiClient.Execute(QueryMyAccountInformation);
 
-            Optional<AccountDto> accountDto = riotApiClient.ParseResponse(response, AccountDto.class);
+        Optional<AccountDto> accountDto = riotApiClient.ParseResponse(response, AccountDto.class);
 
+        if (accountDto.isPresent()) {
             System.out.println("Account Puuid: " + accountDto.get().getPuuid());
-        } catch (URISyntaxException | IOException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } else {
+            System.out.println("Parsing failed, status code not 200 probably.");
         }
+
     }
 }

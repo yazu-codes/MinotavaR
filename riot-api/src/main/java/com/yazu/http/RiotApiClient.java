@@ -40,6 +40,10 @@ public class RiotApiClient {
     }
 
     public <T> Optional<T> ParseResponse(HttpResponse<String> response, Class<T> parseTo) {
+        if (response.statusCode() != 200) {
+            return Optional.empty();
+        }
+
         try {
             String responseJson = response.body().toString();
             T parsed = mapper.readValue(responseJson, parseTo);
