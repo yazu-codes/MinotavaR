@@ -1,0 +1,85 @@
+# Maven target directory
+*/target/
+
+**/*/application.properties
+
+# Logs
+*.log
+*.gz
+**/log/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# NetBeans files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# VS Code files
+.vscode/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.old
+*.orig
+
+# Java compiled class files
+*.class
+
+# Generated sources
+/generated-sources/
+
+# IntelliJ's .idea/libraries folder for library files
+.idea/libraries/
+
+# Environment variables and secrets
+.env
+*.key
+*.pem
+
+# Build tools
+/build/
+dist/
+
+# Dependencies
+**/lib/
+dependency-reduced-pom.xml
+
+# JetBrains PyCharm or IntelliJ files (if Python is involved)
+*.pyc
+__pycache__/
+
+# Code coverage results
+/site/
+jacoco.exec
+
+# Test results
+/test-output/
+surefire-reports/
+
+.vscode
