@@ -27,4 +27,9 @@ public final class Region {
     private static final String ASIA = "asia.api.riotgames.com";
     private static final String EUROPE = "europe.api.riotgames.com";
     private static final String SEA = "sea.api.riotgames.com";
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }
