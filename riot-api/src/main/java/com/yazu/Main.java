@@ -19,13 +19,8 @@ public class Main {
 
         properties.load(inputStream);
 
-        // Retrieve individual properties using their keys
         String riotApiKey = properties.getProperty("riot.api.key");
-
-        // Retrieve individual properties using their keys
         String summonerName = properties.getProperty("summoner.name");
-
-        // Retrieve individual properties using their keys
         String tagLine = properties.getProperty("tag.line");
 
         RiotApiClient riotApiClient = new RiotApiClient()
