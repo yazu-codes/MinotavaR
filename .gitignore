@@ -1,9 +1,9 @@
+**/**/*/SampleScenario.java
+src/main/java/com/yazu/SampleScenario.java
 # Maven target directory
 */target/
 
 **/*/application.properties
-
-*/SampleScenario.java
 
 # Logs
 *.log
