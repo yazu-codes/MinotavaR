@@ -6,7 +6,7 @@ public class NextSeasonMilestonesDto {
     // TODO: THIS PROPERTY SHOULD BE TESTED. THE DOCS SAY THAT IT IS ANY CUSTOM
     // OBJECT. I DOUBT THAT
     @JsonProperty("requireGradeCounts")
-    private Boolean RequireGradeCounts;
+    private RequireGradeCounts RequireGradeCounts;
 
     @JsonProperty("rewardMarks")
     private Integer RewardMarks;
@@ -17,26 +17,35 @@ public class NextSeasonMilestonesDto {
     @JsonProperty("rewardConfig")
     private RewardConfigDto RewardConfig;
 
-    public NextSeasonMilestonesDto(Boolean RequireGradeCounts, Integer RewardMarks, Boolean Bonus,
-            RewardConfigDto RewardConfig) {
+    @JsonProperty("totalGamesRequires")
+    private Integer totalGamesRequires;
+
+    public NextSeasonMilestonesDto(RequireGradeCounts RequireGradeCounts, Integer RewardMarks, Boolean Bonus,
+            RewardConfigDto RewardConfig,
+            Integer totalGamesRequires) {
         this.RequireGradeCounts = RequireGradeCounts;
         this.RewardMarks = RewardMarks;
         this.Bonus = Bonus;
         this.RewardConfig = RewardConfig;
+        this.totalGamesRequires = totalGamesRequires;
+    }
+
+    public Integer getTotalGamesRequires() {
+        return this.totalGamesRequires;
+    }
+
+    public void setTotalGamesRequires(Integer totalGamesRequires) {
+        this.totalGamesRequires = totalGamesRequires;
     }
 
     public NextSeasonMilestonesDto() {
     }
 
-    public Boolean isRequireGradeCounts() {
+    public RequireGradeCounts getRequireGradeCounts() {
         return this.RequireGradeCounts;
     }
 
-    public Boolean getRequireGradeCounts() {
-        return this.RequireGradeCounts;
-    }
-
-    public void setRequireGradeCounts(Boolean RequireGradeCounts) {
+    public void setRequireGradeCounts(RequireGradeCounts RequireGradeCounts) {
         this.RequireGradeCounts = RequireGradeCounts;
     }
 

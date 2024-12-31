@@ -3,7 +3,7 @@
 
 **/*/application.properties
 
-**/Main.java
+*/SampleScenario.java
 
 # Logs
 *.log

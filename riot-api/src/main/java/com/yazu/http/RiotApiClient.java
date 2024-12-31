@@ -6,14 +6,20 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yazu.builder.RiotRequest;
+import com.yazu.constants.Platform;
 import com.yazu.constants.Region;
 import com.yazu.endpoint.accountv1.Account;
+import com.yazu.endpoint.championmasteryv4.ChampionMastery;
 import com.yazu.model.AccountDto;
+import com.yazu.model.ChampionMasteryDto;
 
 public class RiotApiClient {
     private HttpClient c;
@@ -57,6 +63,22 @@ public class RiotApiClient {
         }
     }
 
+    public <T> Optional<T> ParseResponse(HttpResponse<String> response, TypeReference<T> parseTo) {
+        if (response.statusCode() != 200) {
+            return Optional.empty();
+        }
+
+        try {
+            String responseJson = response.body().toString();
+            T parsed = mapper.readValue(responseJson, parseTo);
+            return Optional.of(parsed);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block / FIX THIS LATER
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     public Optional<AccountDto> GetAccountByTagLineAndGameName(String gameName, String tagLine)
             throws URISyntaxException, IOException, InterruptedException {
         RiotRequest QueryMyAccountInformation = new RiotRequest(Region.EUROPE())
@@ -68,5 +90,22 @@ public class RiotApiClient {
         Optional<AccountDto> accountDto = this.ParseResponse(response, AccountDto.class);
 
         return accountDto;
+    }
+
+    public Optional<List<ChampionMasteryDto>> GetChampionMasteryGetAll(String puuid)
+            throws URISyntaxException, IOException, InterruptedException {
+        RiotRequest QueryMyAccountInformation = new RiotRequest(Platform.EUN1())
+                .Get(ChampionMastery.GetAll(puuid))
+                .Secure();
+
+        HttpResponse<String> response = this.Execute(QueryMyAccountInformation);
+
+        List<ChampionMasteryDto> championMasteryDtos = new ArrayList<>();
+
+        Optional<List<ChampionMasteryDto>> result = this.ParseResponse(response,
+                new TypeReference<List<ChampionMasteryDto>>() {
+                });
+
+        return result;
     }
 }
