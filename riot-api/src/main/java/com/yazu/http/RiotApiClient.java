@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,8 +98,6 @@ public class RiotApiClient {
                 .Secure();
 
         HttpResponse<String> response = this.Execute(QueryMyAccountInformation);
-
-        List<ChampionMasteryDto> championMasteryDtos = new ArrayList<>();
 
         Optional<List<ChampionMasteryDto>> result = this.ParseResponse(response,
                 new TypeReference<List<ChampionMasteryDto>>() {
